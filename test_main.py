@@ -43,13 +43,27 @@ class Authorizer_SMS_TestCase(unittest.TestCase):
 
 class PaymentProcessor_TestCase(unittest.TestCase):
 
+    def test_init(self):
+        auth = Authorizer_SMS()
+        p = PaymentProcessor(auth)
+        self.assertEqual(p.authorizer, auth)
+
     def test_payment_success(self):
-        # ???
-        self.assertTrue(True)
+        auth = Authorizer_SMS()
+        auth.generate_sms_code()
+        with patch('builtins.input', return_value=auth.code):
+            p = PaymentProcessor(auth)
+            order = Order()
+            p.pay(order)
+            self.assertEqual(order.status, 'paid')
 
     def test_payment_fail(self):
-        # ???
-        self.assertTrue(True)
+        auth = Authorizer_SMS()
+        auth.generate_sms_code()
+        with patch('builtins.input', return_value='1234567'):
+            p = PaymentProcessor(auth)
+            order = Order()
+            self.assertRaises(Exception, p.pay, order)
 
 
 if __name__ == '__main__':

@@ -27,12 +27,14 @@ class Authorizer_SMS:
         return self.authorized
 
 class PaymentProcessor:
+
+    def __init__(self, authorizer: Authorizer_SMS) -> None:
+        self.authorizer = authorizer
     
     def pay(self, order):
-        authorizer = Authorizer_SMS()
-        authorizer.generate_sms_code()
-        authorizer.authorize()
-        if not authorizer.is_authorized():
+        # self.authorizer.generate_sms_code()
+        self.authorizer.authorize()
+        if not self.authorizer.is_authorized():
             raise Exception("Not authorized")
         print(f"Processing payment for order with id {order.id}")
         order.set_status("paid")
