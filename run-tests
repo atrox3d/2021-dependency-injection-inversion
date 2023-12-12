@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+coverage run test_main.py;coverage html
