@@ -41,6 +41,25 @@ class Authorizer_SMS_TestCase(unittest.TestCase):
         self.assertFalse(auth.is_authorized())
 
 
+
+class Authorizer_Robot_TestCase(unittest.TestCase):
+
+    def test_init_authorized(self):
+        auth = Authorizer_Robot()
+        self.assertFalse(auth.is_authorized())
+
+    def test_authorize_success(self):
+        auth = Authorizer_Robot()
+        with patch('builtins.input', return_value="n"):
+            auth.authorize()
+            self.assertTrue(auth.is_authorized())
+
+    def test_authorize_failure(self):
+        auth = Authorizer_Robot()
+        with patch('builtins.input', return_value="y"):
+            auth.authorize()
+            self.assertFalse(auth.is_authorized())
+
 class PaymentProcessor_TestCase(unittest.TestCase):
 
     def test_init(self):
