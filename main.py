@@ -1,5 +1,17 @@
 import string
 import random
+from abc import ABC, abstractmethod
+
+
+class Authorizer(ABC):
+    @abstractmethod
+    def authorize(self):
+        pass
+
+    @abstractmethod
+    def is_authorized(self):
+        pass
+
 
 class Order:
 
@@ -10,7 +22,7 @@ class Order:
     def set_status(self, status):
         self.status = status
 
-class Authorizer_SMS:
+class Authorizer_SMS(Authorizer):
 
     def __init__(self):
         self.authorized = False
@@ -28,7 +40,7 @@ class Authorizer_SMS:
 
 class PaymentProcessor:
 
-    def __init__(self, authorizer: Authorizer_SMS) -> None:
+    def __init__(self, authorizer: Authorizer) -> None:
         self.authorizer = authorizer
     
     def pay(self, order):
