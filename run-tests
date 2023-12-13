@@ -1,2 +1,6 @@
 #!/usr/bin/env bash
-coverage run test_main.py;coverage html
+echo running "'coverage run test_main.py'" ...
+coverage run test_main.py
+
+echo running "'coverage html'" ...
+coverage html

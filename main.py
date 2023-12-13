@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 class Authorizer(ABC):
     @abstractmethod
     def authorize(self):
-        pass
+        '''Authorizes the user'''
 
     @abstractmethod
     def is_authorized(self):
